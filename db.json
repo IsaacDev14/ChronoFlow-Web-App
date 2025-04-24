@@ -1,0 +1,48 @@
+{
+  "events": [
+    {
+      "id": "0c38",
+      "title": "dance classes",
+      "date": "2025-04-25"
+    },
+    {
+      "id": "f04e",
+      "title": "check room",
+      "date": "2025-04-07"
+    },
+    {
+      "id": "a5cf",
+      "title": "swimming classes",
+      "date": "2025-04-20",
+      "reminder": 60
+    },
+    {
+      "id": "d456",
+      "title": "pray and again pray",
+      "date": "2025-04-22"
+    },
+    {
+      "id": "352b",
+      "title": "movies",
+      "date": "2025-04-24",
+      "reminder": 60
+    },
+    {
+      "id": "976f",
+      "title": "cleaning house",
+      "date": "2025-04-23",
+      "reminder": 10
+    },
+    {
+      "id": "d35f",
+      "title": "time to sing",
+      "date": "2025-04-09"
+    },
+    {
+      "id": "6fda",
+      "title": "welcome the visitors",
+      "date": "2025-04-24",
+      "reminder": 60
+    }
+  ]
+}
