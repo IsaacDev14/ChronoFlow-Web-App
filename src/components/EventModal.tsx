@@ -1,21 +1,36 @@
-import { useState } from "react";
+import { useState} from "react";
 import { addEvent } from "../services/api";
+import { CalendarEvent } from "../types";
 
 type EventModalProps = {
   selectedDate: Date;
   closeModal: () => void;
   fetchEvents: () => void;
+  initialEvent?: CalendarEvent | null;
 };
 
-const EventModal = ({ selectedDate, closeModal, fetchEvents }: EventModalProps) => {
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState(selectedDate.toISOString().split("T")[0]);
-  const [reminder, setReminder] = useState<number | undefined>(undefined);
+const EventModal = ({ selectedDate, closeModal, fetchEvents, initialEvent }: EventModalProps) => {
+  const [title, setTitle] = useState(initialEvent?.title || "");
+  const [date, setDate] = useState(initialEvent ? new Date(initialEvent.start).toISOString().split("T")[0] : selectedDate.toISOString().split("T")[0]);
+  const [reminder, setReminder] = useState<number | undefined>(initialEvent?.reminder);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const start = new Date(date);
+    const end = new Date(start.getTime() + 60 * 60 * 1000); // 1 hour duration
+
+    const newEvent: CalendarEvent = {
+      id: initialEvent ? initialEvent.id : Date.now(),  // Use a new ID if creating a new event
+      title,
+      date,
+      reminder,
+      start: start.toISOString(),
+      end: end.toISOString(),
+    };
+
     try {
-      await addEvent({ title, date, reminder });
+      await addEvent(newEvent);
       fetchEvents();
       closeModal();
     } catch (error) {
@@ -26,7 +41,7 @@ const EventModal = ({ selectedDate, closeModal, fetchEvents }: EventModalProps) 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 z-50">
       <div className="bg-white p-8 rounded-xl w-96 shadow-2xl">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Add Event</h2>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">{initialEvent ? "Edit" : "Add"} Event</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-5">
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">

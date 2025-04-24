@@ -1,7 +1,10 @@
-export type CalendarEvent = {
-    id: number;
-    title: string;
-    date: string;
-    time?: string;
-    reminder?: number; // Minutes before event (e.g., 10, 60, 1440)
-  };
+export interface CalendarEvent {
+  id: number;
+  title: string;
+  start: string;  // ISO 8601 Date string
+  end: string;    // ISO 8601 Date string
+  description?: string;
+  location?: string;
+  date: string;    // Only for display or selection purposes
+  reminder?: number;
+}
